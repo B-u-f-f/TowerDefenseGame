@@ -1,40 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-    public float speed = 0.5f;
+    [SerializeField] private float m_speed = 0.5f;
     
-    private float t;
-    private int pointsPassed;
-
     private BezierPath path;
-    // Start is called before the first frame update
-    void Start() {
-        
-        pointsPassed = 0;
-        t = 0f;
+    public BezierPath Path {
+        set {
+            path = value;
+        }
     }
+ 
+    public void startFollow() {
+        StartCoroutine(startFollowCour());
+    } 
 
-    // Update is called once per frame
-    void Update(){
-
-        while(path == null)
-            return;
-        
-        if(pointsPassed < path.getNumPoints() - 1){ 
-            Vector3 pos = path.getNextPosition(t, pointsPassed);
-            transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-
-            t += speed * Time.deltaTime;
-
-            if(t >= 1.0f){ 
-                pointsPassed += 1;
-                t = 0f;
-            }
+    private IEnumerator startFollowCour(){
+        foreach (Vector3 pos in path.Positions){
+            yield return move(m_speed, pos);
         }
     }
 
-    public void setBezierPath(BezierPath p){ path = p; }
-    
+
+    private IEnumerator move(float speed, Vector3 dest){
+        while(transform.position != dest){
+            transform.position = Vector3.MoveTowards(transform.position, dest, speed * Time.deltaTime);
+            yield return null;
+        }
+    }
 }

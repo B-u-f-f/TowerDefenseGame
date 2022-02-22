@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public EnemyMovement enemy;
-    public GameObject spawnPoint;
-
-    private int enemyCount;
+    [SerializeField] private Transform m_spawnPoint;
     
-    void Start()
-    {
-        enemyCount = 0;
-        StartCoroutine(enemySpawn());
-    }
+ /*    IEnumerator enemySpawn()
 
-    IEnumerator enemySpawn()
     {
         while(enemyCount < 10)
         {
-            Vector3 spawnPosition = spawnPoint.transform.position;
+            Vector3 spawnPosition = spawnPoint.position;
             spawnPosition.y += 1;
             EnemyMovement obj = Instantiate(enemy, spawnPosition, Quaternion.identity);
-            obj.setBezierPath(spawnPoint.GetComponent<BezierPath>());
-            yield return new WaitForSeconds(3f);
+            obj.Path = spawnPoint.GetComponent<BezierPath>();
+            obj.startFollow();
+
             enemyCount += 1;
+            yield return new WaitForSeconds(3f);
         }
-    }    
+    }   */ 
+
+
+    public void spawnEnemy(EnemyMovement enemy){
+        Vector3 spawnPosition = m_spawnPoint.position;
+        spawnPosition.y += 1;
+        EnemyMovement obj = Instantiate(enemy, spawnPosition, Quaternion.identity);
+        obj.Path = m_spawnPoint.GetComponent<BezierPath>();
+        obj.startFollow(); 
+    }
 }

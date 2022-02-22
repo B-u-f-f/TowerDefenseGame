@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour {
     
-    [SerializeField] private List<WaveData> waves;
+    [SerializeField] private WaveData[] waves;
+    
 
+    private IEnumerator m_curWave; 
+    private WaveManager m_wm;
     // Start is called before the first frame update
     void Start() {
-        WaveManager wm = GetComponent<WaveManager>();
+        m_wm = GetComponent<WaveManager>();
 
-        wm.setWaves(waves);
+        m_wm.Waves = waves;
+        StartCoroutine(cwaves());
     }
+    
+    void Update(){
+    }
+
+    IEnumerator cwaves () {
+        yield return StartCoroutine(m_wm.startNextWave());
+        yield return StartCoroutine(m_wm.startNextWave());
+    }
+
 }
