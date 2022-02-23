@@ -25,7 +25,7 @@ public class CannonAI : MonoBehaviour
     void Start() {
 
         // set the range on the collider
-        transform.GetChild(2).GetComponent<SphereCollider>().radius = m_rangeRadius;
+        m_cannonRange.GetComponent<SphereCollider>().radius = m_rangeRadius;
 
     }
 
