@@ -9,22 +9,19 @@ public class CannonAI : MonoBehaviour
     [SerializeField] private float m_vAngleMax;   // Radians
     [SerializeField] private float m_rangeRadius;
     [SerializeField] private uint m_fireRate;    //milliseconds 
-    [SerializeField] private uint m_damage; 
+    [SerializeField] private uint m_damage;
     
         
 
-    private Transform m_cannonNozzle;
-    private CannonRange m_cannonRange;
+    [SerializeField] private Transform m_cannonNozzle;
+    [SerializeField] private CannonRange m_cannonRange;
     private IEnumerator m_fireCo;
     // Start is called before the first frame update
     //
     void Start() {
-       // getting the nozzle transform 
-       //...
-        
-        // getting the range 
 
         // set the range on the collider
+        transform.GetChild(2).GetComponent<SphereCollider>().radius = m_rangeRadius;
     }
 
     // Update is called once per frame
