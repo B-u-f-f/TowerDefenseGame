@@ -25,18 +25,18 @@ public class CannonAI : MonoBehaviour
         // set the range on the collider
         m_cannonRange.GetComponent<SphereCollider>().radius = m_rangeRadius;
         m_fireCo = null;
-        m_angVelocity = 5f;
         temp_fire = 0;
-        m_fireDelay = 2000;
     }
     
     private IEnumerator cannonFire(){
-        while(true){
+        EnemyAI eai = m_target.GetComponent<EnemyAI>();
+
+        while(eai.Health > 0){
             Debug.Log("Fire! Fire! Fire! " + m_target.name + " " + temp_fire);
         
             // take away the health of m_target
-            
-            temp_fire += 1;            
+            eai.reduceHealth(m_damage); 
+            temp_fire += 1;  
 
             // wait for delay
             yield return new WaitForSeconds(m_fireDelay / 1000f);
