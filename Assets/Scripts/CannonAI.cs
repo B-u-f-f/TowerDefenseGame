@@ -1,43 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CannonAI : MonoBehaviour
-{
+public class CannonAI : MonoBehaviour {
 
     private GameObject m_target;
+    private IEnumerator m_fireCo;
+
     [SerializeField] private Transform m_cannonNozzle;
     [SerializeField] private CannonRange m_cannonRange;
-    private Coroutine m_fireCo;
-    //private IEnumerator m_Rotation;
     [SerializeField] private CannonSO cannonStats;
 
-    private int temp_fire;
 
-   
     void Start() {
         // set the range on the collider
         m_cannonRange.GetComponent<SphereCollider>().radius = cannonStats.m_rangeRadius;
         m_fireCo = null;
-        temp_fire = 0;
     }
     
     private IEnumerator cannonFire(){
         EnemyAI eai = m_target.GetComponent<EnemyAI>();
 
         while(eai.Health > 0){
-            Debug.Log("Fire! Fire! Fire! " + m_target.name + " " + temp_fire);
+            Debug.Log("Fire! Fire! Fire! " + m_target.name);
         
             // take away the health of m_target
             eai.reduceHealth(cannonStats.m_damage); 
-            temp_fire += 1;  
 
             // wait for delay
-            yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f);
-
-            // shot number
-            
-        }        
+            yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f); 
+        }
     } 
 
     // Update is called once per frame
@@ -52,7 +43,7 @@ public class CannonAI : MonoBehaviour
             // if enemy dead and m_target = null 
             // but m_fireCo != null
             if(m_fireCo != null){
-                StopCoroutine(cannonFire());
+                StopCoroutine(m_fireCo);
                 m_fireCo = null;
             }
 
@@ -67,7 +58,7 @@ public class CannonAI : MonoBehaviour
             m_target = null;
             // stop the coroutine
             if(m_fireCo != null){
-                StopCoroutine(cannonFire());
+                StopCoroutine(m_fireCo);
                 m_fireCo = null;
             }
             return;
@@ -84,7 +75,9 @@ public class CannonAI : MonoBehaviour
         m_cannonNozzle.rotation = Quaternion.Slerp(m_cannonNozzle.rotation, rotation, cannonStats.m_angVelocity * Time.deltaTime);
         
         // if cannon not firing at someone else then start firing on m_target
-        if(m_fireCo == null)
-            m_fireCo = StartCoroutine(cannonFire());
+        if(m_fireCo == null){
+            m_fireCo = cannonFire();
+            StartCoroutine(m_fireCo);
+        }
     }
 }
