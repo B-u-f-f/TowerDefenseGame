@@ -33,11 +33,11 @@ public class CannonRange : MonoBehaviour {
     }
 
 
-    void Update(){
-        GameObject tar = getNextTarget(); 
-        if(tar != null)
-            Debug.Log("Target: " + tar.name);
-    }
+    // void Update(){
+    //     GameObject tar = getNextTarget(); 
+    //     if(tar != null)
+    //         Debug.Log("Target: " + tar.name);
+    // }
     
     public GameObject getNextTarget(){
         if(m_potTargets.Count == 0){
