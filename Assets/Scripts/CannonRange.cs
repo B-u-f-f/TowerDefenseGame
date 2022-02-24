@@ -39,6 +39,11 @@ public class CannonRange : MonoBehaviour {
     //         Debug.Log("Target: " + tar.name);
     // }
     
+    public bool isTargetInRange(GameObject g) {
+        return m_potTargets.Contains(g);
+    }
+
+
     public GameObject getNextTarget(){
         if(m_potTargets.Count == 0){
             return null;

@@ -5,91 +5,60 @@ using UnityEngine;
 public class CannonAI : MonoBehaviour
 {
 
-    [SerializeField] private GameObject m_target;
-    [SerializeField] private float m_vAngleMax;   // Radians
+    private GameObject m_target;
     [SerializeField] private float m_rangeRadius;
     [SerializeField] private uint m_fireRate;    //milliseconds 
     [SerializeField] private uint m_damage;
-
-    Quaternion target = Quaternion.Euler(0, -90, 0);
-    
+ 
         
 
     [SerializeField] private Transform m_cannonNozzle;
     [SerializeField] private CannonRange m_cannonRange;
+    [SerializeField] private float m_angVelocity;
     private IEnumerator m_fireCo;
-    private IEnumerator m_Rotation;
+    //private IEnumerator m_Rotation;
 
-    private GameObject pivotPoint;
-    // private bool flag;
-    // Start is called before the first frame update
-    //
+   
     void Start() {
-
         // set the range on the collider
         m_cannonRange.GetComponent<SphereCollider>().radius = m_rangeRadius;
-
     }
-
-    // IEnumerator startRotating(Vector3 pos){
     
-
-    //     while(transform.forward != pos){
-    //         float angle = Vector3.SignedAngle(transform.forward, pos, Vector3.up);
-    //         Debug.Log(angle);
-
-    //         target = Quaternion.Euler(0, angle, 0);
-
-    //         this.transform.rotation = Quaternion.Slerp(transform.rotation, target, 0.2f);
-
-    //         yield return null;
-    //     }        
-
-    //     flag = true;
-    // }
+    private IEnumerator cannonFire(){
+        yield return null;
+    } 
 
     // Update is called once per frame
     void Update() {
-        // is target valid
-        // Vector3 pos = m_target.transform.position - transform.position;        
-        // pos.Normalize();
-
-        // float angle = Vector3.SignedAngle(transform.forward, pos, Vector3.up);
-        // target = Quaternion.Euler(0,angle,0);
-        // this.transform.rotation = Quaternion.Slerp(transform.rotation,target,0.3f);
-
+        // find target  
+        
+        // if has no target
+        if(m_target == null){
+            m_target = m_cannonRange.getNextTarget();  
+            
+            // if no target is available
+            if(m_target == null){
+                return;
+            }
+        }
+        
+        // if target moves out of the range
+        if(!m_cannonRange.isTargetInRange(m_target)){
+            m_target = null;
+            return;
+        }
+    
+        // has a target 
+        //
+        /// direction to the target 
         Vector3 direction = m_target.transform.position - m_cannonNozzle.position;
-        float angle = Mathf.Atan2(direction.x,direction.z)*Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle,Vector3.up);
-        m_cannonNozzle.rotation = Quaternion.Slerp(m_cannonNozzle.rotation,rotation,5f*Time.deltaTime);
-        // rotate nozzle towards the target
-        // Vector3 pos = m_target.transform.position - transform.position;
+        /// angle to rotate to face the target
+        float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        /// rotate about axis up through the angle "angle" 
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+        /// rotate
+        m_cannonNozzle.rotation = Quaternion.Slerp(m_cannonNozzle.rotation, rotation, m_angVelocity * Time.deltaTime);
         
-        // pos.Normalize();
-
-        // while(transform.forward != pos){
-        //     float angle = Vector3.SignedAngle(transform.forward, pos, Vector3.up);
-        //     Debug.Log(angle);
-
-        //     target = Quaternion.Euler(0, angle, 0);
-
-        //     this.transform.rotation = Quaternion.Slerp(transform.rotation, target, 0.2f);
-        // }
-
-
-        // if(pos != transform.forward){
-        //     if(flag || m_Rotation == null){
-        //         m_Rotation = startRotating(pos);
-        //         StartCoroutine(m_Rotation);
-        //     }  
-        //     else{
-        //         // still rotating
-        //     }          
-        // }
-             
-        
-
-
-        // co routine check
+        // start firing
     }
 }
