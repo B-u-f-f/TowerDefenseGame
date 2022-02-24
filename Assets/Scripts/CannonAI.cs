@@ -6,24 +6,18 @@ public class CannonAI : MonoBehaviour
 {
 
     private GameObject m_target;
-    [SerializeField] private float m_rangeRadius;
-    [SerializeField] private uint m_fireDelay;    //milliseconds 
-    [SerializeField] private uint m_damage;
- 
-        
-
     [SerializeField] private Transform m_cannonNozzle;
     [SerializeField] private CannonRange m_cannonRange;
-    [SerializeField] private float m_angVelocity;
     private Coroutine m_fireCo;
     //private IEnumerator m_Rotation;
+    [SerializeField] private CannonSO cannonStats;
 
     private int temp_fire;
 
    
     void Start() {
         // set the range on the collider
-        m_cannonRange.GetComponent<SphereCollider>().radius = m_rangeRadius;
+        m_cannonRange.GetComponent<SphereCollider>().radius = cannonStats.m_rangeRadius;
         m_fireCo = null;
         temp_fire = 0;
     }
@@ -35,11 +29,11 @@ public class CannonAI : MonoBehaviour
             Debug.Log("Fire! Fire! Fire! " + m_target.name + " " + temp_fire);
         
             // take away the health of m_target
-            eai.reduceHealth(m_damage); 
+            eai.reduceHealth(cannonStats.m_damage); 
             temp_fire += 1;  
 
             // wait for delay
-            yield return new WaitForSeconds(m_fireDelay / 1000f);
+            yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f);
 
             // shot number
             
@@ -87,7 +81,7 @@ public class CannonAI : MonoBehaviour
         /// rotate about axis up through the angle "angle" 
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
         /// rotate
-        m_cannonNozzle.rotation = Quaternion.Slerp(m_cannonNozzle.rotation, rotation, m_angVelocity * Time.deltaTime);
+        m_cannonNozzle.rotation = Quaternion.Slerp(m_cannonNozzle.rotation, rotation, cannonStats.m_angVelocity * Time.deltaTime);
         
         // if cannon not firing at someone else then start firing on m_target
         if(m_fireCo == null)
