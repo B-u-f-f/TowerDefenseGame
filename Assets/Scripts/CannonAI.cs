@@ -35,6 +35,7 @@ public class CannonAI : MonoBehaviour
             Debug.Log("Fire! Fire! Fire! " + m_target.name + " " + temp_fire);
         
             // take away the health of m_target
+            
             temp_fire += 1;            
 
             // wait for delay
