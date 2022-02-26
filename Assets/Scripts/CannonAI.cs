@@ -9,6 +9,7 @@ public class CannonAI : MonoBehaviour {
     [SerializeField] private Transform m_cannonNozzle;
     [SerializeField] private CannonRange m_cannonRange;
     [SerializeField] private CannonSO cannonStats;
+    [SerializeField] private GameObject cannonBall;
 
 
     void Start() {
@@ -22,25 +23,32 @@ public class CannonAI : MonoBehaviour {
 
         while(eai.Health > 0){
             Debug.Log("Fire! Fire! Fire! " + m_target.name);
-        
-            // take away the health of m_target
-            eai.reduceHealth(cannonStats.m_damage); 
+
+            // start coroutine for cannonball
+            GameObject cBall = Instantiate(cannonBall, transform.position, Quaternion.identity);
+            
+            cBall.GetComponent<CannonBall>().moveCannonBall(m_target);
 
             // wait for delay
-            yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f); 
+            yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f);
+
+            // take away the health of m_target
+            eai.reduceHealth(cannonStats.m_damage);
         }
-    } 
+    }
+
+
 
     // Update is called once per frame
     void Update() {
-        // find target  
+        // find target
         
         // if has no target
         if(m_target == null){
             // stop coroutine cannonFire
             m_target = m_cannonRange.getNextTarget();
 
-            // if enemy dead and m_target = null 
+            // if enemy dead and m_target = null
             // but m_fireCo != null
             if(m_fireCo != null){
                 StopCoroutine(m_fireCo);
