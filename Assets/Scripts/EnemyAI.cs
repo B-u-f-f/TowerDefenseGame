@@ -12,7 +12,6 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
-
     public void reduceHealth(uint amt){
         m_health -= (int)amt;
 

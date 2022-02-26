@@ -668,6 +668,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 958384044}
     - target: {fileID: 7565430787951241636, guid: 0011c1b3bb1cc1d759ef5677e4a9b5d4, type: 3}
+      propertyPath: cannonBall
+      value: 
+      objectReference: {fileID: 585979358299908120, guid: 6c8886cc7f89647fcb45ceb8ad15e05a, type: 3}
+    - target: {fileID: 7565430787951241636, guid: 0011c1b3bb1cc1d759ef5677e4a9b5d4, type: 3}
       propertyPath: cannonStats
       value: 
       objectReference: {fileID: 11400000, guid: a32c4552527f5a2a9888a41677102096, type: 2}
@@ -675,6 +679,10 @@ PrefabInstance:
       propertyPath: m_fireDelay
       value: 2000
       objectReference: {fileID: 0}
+    - target: {fileID: 7565430787951241636, guid: 0011c1b3bb1cc1d759ef5677e4a9b5d4, type: 3}
+      propertyPath: m_cannonBall
+      value: 
+      objectReference: {fileID: 585979358299908120, guid: 6c8886cc7f89647fcb45ceb8ad15e05a, type: 3}
     - target: {fileID: 7565430787951241636, guid: 0011c1b3bb1cc1d759ef5677e4a9b5d4, type: 3}
       propertyPath: m_angVelocity
       value: 5
