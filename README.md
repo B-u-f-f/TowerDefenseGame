@@ -9,3 +9,5 @@
 - ridged fractal noise
 - [Wiki](http://pcg.wikidot.com/articles)
 
+## Research papers
+

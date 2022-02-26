@@ -21,4 +21,21 @@ public static class NoiseGenerator
         return noisemap;
 
     }
+
+
+    public static float[] generatePerlinNoise1D(int len, float scale){
+        if (scale < 0.0001f){
+            scale = 0.0001f;
+        }
+
+        float[] noisemap = new float[len];
+
+        for(int i = 0; i < len; i++){
+            noisemap[i] = Mathf.PerlinNoise(i / scale, 0.0f); 
+        }
+
+        return noisemap;
+
+
+    }
 }

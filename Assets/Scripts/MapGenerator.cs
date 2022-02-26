@@ -7,6 +7,7 @@ public class MapGenerator : MonoBehaviour {
     [SerializeField] private int height;
     [SerializeField] private float scale;
     
+
     public bool autoUpdate = false;
     public void display(){
         float[,] noisemap = NoiseGenerator.generatePerlinNoiseMap(width, height, scale);
