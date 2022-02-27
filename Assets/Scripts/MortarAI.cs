@@ -13,6 +13,8 @@ public class MortarAI : MonoBehaviour
     [SerializeField] private MortarSO mortarStats;
     [SerializeField] private GameObject mortarBall;
 
+    private int tempFire = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +26,23 @@ public class MortarAI : MonoBehaviour
     }
 
     private IEnumerator mortarFire(){
+        
+        EnemyAI eai = m_target.GetComponent<EnemyAI>();
 
-        yield return null;
+        while(eai.Health > 0) {
+            Debug.Log("Fire! Fire! Fire! " + tempFire + m_target.name);
+            tempFire++;
+
+            // start Coroutine for Cannonball
+            GameObject mBall = Instantiate(mortarBall, transform.position, Quaternion.identity);
+            mBall.GetComponent<MortarBall>().moveMortarBall(m_target, mortarStats.m_damage);
+
+            // wait for delay
+            yield return new WaitForSeconds(mortarStats.m_fireDelay / 1000f);
+
+            // take away the health of m_target
+            //eai.reduceHealth(mortarStats.m_damage);
+        }        
     }
 
     // Update is called once per frame

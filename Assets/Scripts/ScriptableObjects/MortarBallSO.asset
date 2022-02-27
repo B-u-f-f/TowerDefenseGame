@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7fe4cbe158e8846a970e0eb410f26dc, type: 3}
-  m_Name: MortarSO
+  m_Script: {fileID: 11500000, guid: cff8e2beea32a442185a1c09d7a97d10, type: 3}
+  m_Name: MortarBallSO
   m_EditorClassIdentifier: 
-  <m_rangeRadius>k__BackingField: 20
-  <m_fireDelay>k__BackingField: 2000
-  <m_damage>k__BackingField: 20
-  <m_angVelocity>k__BackingField: 5
+  <m_speed>k__BackingField: 0.3
