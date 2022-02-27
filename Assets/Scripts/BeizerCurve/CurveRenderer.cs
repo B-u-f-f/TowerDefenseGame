@@ -12,7 +12,8 @@ public class CurveRenderer : MonoBehaviour {
     [SerializeField] private float thickness = 0.3f;
     [SerializeField] private uint samples = 10;
     [SerializeField] private float scale = 0.3f;
-    [SerializeField] private int smoothness  = 10; 
+    // [SerializeField] private int smoothness  = 10; 
+    [SerializeField] private float spacing = 0.2f;
 
     [field: SerializeField] public bool autoUpdate {get; set;}
     void Start() { 
@@ -42,7 +43,7 @@ public class CurveRenderer : MonoBehaviour {
 
         CubicSplineObj cso = GetComponent<CubicSplineObj>();
         cso.fitCubicSpline(noise, start, end, Vector3.up);
-        Vector3[] sampledPoints = cso.samplePoints(smoothness, start, end); 
+        Vector3[] sampledPoints = cso.samplePoints(spacing, start, end); 
         
         var meshData = createMesh(sampledPoints, thickness);
         Mesh mesh = new Mesh();
@@ -77,6 +78,7 @@ public class CurveRenderer : MonoBehaviour {
 
             dir.Normalize();
             Vector3 left = -1f * Vector3.Cross(Vector3.up, dir);
+            left.Normalize();
 
             /// create and add points 
             meshVertices[meshVertexIndex] = points[i] + (thickness/2.0f) * left;
