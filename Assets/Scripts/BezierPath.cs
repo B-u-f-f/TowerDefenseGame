@@ -21,7 +21,6 @@ public class BezierPath : MonoBehaviour {
 
     [SerializeField] private Transform[] m_waypoints;
 
-    // Start is called before the first frame update
     void Start(){ 
         m_lr = this.GetComponent<LineRenderer>();
 
@@ -37,7 +36,7 @@ public class BezierPath : MonoBehaviour {
         
 
         count = m_waypoints.Length;
-        positions = new Vector3[count]; 
+        positions = new Vector3[count];
         for(int i = 0; i < count; i++){
             positions[i] = m_waypoints[i].position; 
         }
