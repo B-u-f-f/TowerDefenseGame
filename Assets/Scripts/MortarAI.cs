@@ -30,7 +30,7 @@ public class MortarAI : MonoBehaviour
         EnemyAI eai = m_target.GetComponent<EnemyAI>();
 
         while(eai.Health > 0) {
-            Debug.Log("Fire! Fire! Fire! " + tempFire + m_target.name);
+            //Debug.Log("Fire! Fire! Fire! " + tempFire + m_target.name);
             tempFire++;
 
             // start Coroutine for Cannonball
