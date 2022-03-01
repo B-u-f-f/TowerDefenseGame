@@ -1,20 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TowerPlacement : MonoBehaviour {
     
     [SerializeField] private Camera m_worldCam;
     [SerializeField] private GameObject tower;
+    //[SerializeField] private GameObject cubeSlot;
+
     private LayerMask m_layerMask;
+    private Toggle cubeToggle;
 
     void Start(){
         m_layerMask = LayerMask.GetMask("placementplane");
+
+
+        // cubeToggle = cubeSlot.transform.GetComponent<Toggle>();
+
+        // cubeToggle.onValueChanged.AddListener(delegate {
+        //     ToggleValueChanged(cubeToggle);
+        // });
+    }
+
+    public void ToggleValueChanged(Toggle change)
+    {
+        Debug.Log(cubeToggle.isOn);
     }
 
     void Update() {
         if(Input.GetMouseButtonDown(0)){
             Vector3 mousePosition = Input.mousePosition;
+
+            
             
             // mousePosition.z = 1.0f;
             
