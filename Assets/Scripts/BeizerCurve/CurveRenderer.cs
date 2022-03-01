@@ -130,10 +130,16 @@ public class CurveRenderer : MonoBehaviour {
             verts2[i] = verts[i] + Vector3.up * wallHeight + left * (wallHeight / Mathf.Tan(Mathf.PI/2.0f - wallInclination));
         }
 
-        
+         
         createTopPlane(isLeft ? leftPlane : rightPlane, verts2, isLeft);
+        
+        if(isLeft){
+            Vector3[] temp = verts;
+            verts = verts2;
+            verts2 = temp;
+        }
 
-        var meshData = genMeshTwoSidedBtwTwoCurves(verts, verts2);
+        var meshData = genMeshBtwTwoCurves(verts, verts2);
         Mesh mesh = new Mesh();
         obj.GetComponent<MeshFilter>().mesh = mesh;
         
