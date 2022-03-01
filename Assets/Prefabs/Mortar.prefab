@@ -206,7 +206,7 @@ MonoBehaviour:
   m_mortarNozzle: {fileID: 6654801084507004168}
   m_mortarRange: {fileID: 1135945164354945912}
   mortarStats: {fileID: 11400000, guid: 9f2809d8533ac25aba9730e43f46ab78, type: 2}
-  mortarBall: {fileID: 1134662196432032814, guid: 172a2b646c7486d6e88ed8f4dd4bbcea, type: 3}
+  mortarBall: {fileID: 8532035228189706803, guid: 172a2b646c7486d6e88ed8f4dd4bbcea, type: 3}
 --- !u!1 &6654801083685971847
 GameObject:
   m_ObjectHideFlags: 0
