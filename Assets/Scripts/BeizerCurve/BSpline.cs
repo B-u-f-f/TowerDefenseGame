@@ -74,42 +74,28 @@ public class BSpline {
     }
 
     
-    public Vector3[] evenlySpacedPoints(float spacing){
-//        float disBtwPoints = (m_npoints - 1)/((float)(numPoints - 1));
-//    
-//
-//        Vector3[] points = new Vector3[numPoints];
-//
-//        float frac, dist;
-//        int inte;
-//        for(int i = 0; i < numPoints; i++){
-//            dist = disBtwPoints * i;
-//         
-//            inte = Mathf.FloorToInt(dist); 
-//            frac = dist - inte;
-//            
-//            if(inte < m_npoints - 1)
-//                points[i] = eval(frac, inte);
-//            else
-//                points[i] = m_controlPoints[m_npoints - 1];
-//        }
-//
-//
-//        return points;
+    public Vector3[] evenlySpacedPoints(float spacing, float resolution){
         
         List<Vector3> points = new List<Vector3>();
         points.Add(m_controlPoints[0]);
         Vector3 prev = m_controlPoints[0];
         float distSinceLast = 0.0f;
+        
 
 
         for (int i = 0; i < (m_npoints) - 1; i++){
             var cp = returnControlPoints(i);
+            
+            float estimatedCurveLength = Vector3.Distance(cp.p0, cp.p3) 
+                                    + ( Vector3.Distance(cp.p0, cp.p1) +
+                                        Vector3.Distance(cp.p1, cp.p2) + 
+                                        Vector3.Distance(cp.p2, cp.p3)) / 2.0f;
 
+            int divisions = Mathf.CeilToInt(estimatedCurveLength * resolution * 10.0f);
             float t = 0.0f;
 
             while(t <= 1.0f){
-                t += 0.1f;
+                t += 1.0f/divisions;
 
                 Vector3 p = evalBCurve(cp.p0, cp.p1, cp.p2, cp.p3, t);
                 distSinceLast += Vector3.Distance(prev, p);
