@@ -5,34 +5,50 @@ using UnityEngine.UI;
 
 public class ToggleController : MonoBehaviour
 {
-    [SerializeField] private Toggle cube;
-    [SerializeField] private Toggle sphere;
+    [SerializeField] private ToggleGroup toggleGroup;
+    [SerializeField] private TowerPlacement m_placement;
+
+    private bool m_isFollowingObject;
 
     // Start is called before the first frame update
     void Start()
     {
-        cube.onValueChanged.AddListener(delegate {
-            ToggleValueChanged(cube);
-        });
+        m_isFollowingObject = false;
+
+        for (int i = 0; i < toggleGroup.transform.childCount; i++){
+            int j = i;
+            // Debug.Log(j);
+            Toggle t = toggleGroup.gameObject.transform.GetChild(j).GetComponent<Toggle>();
+            t.onValueChanged.AddListener(delegate {
+                ToggleValueChanged(t, j);
+            });
+        }
     }
 
-    public void ToggleValueChanged(Toggle change)
-    {
+    public void ToggleValueChanged(Toggle change, int towerIndex){
+        
+        // coroutine call
+        if(!m_isFollowingObject){
+            m_placement.startFollowingObject(towerIndex);
+            m_isFollowingObject = true;
+        } else {
+            m_placement.stopFollowingObject();
+            m_placement.startFollowingObject(towerIndex);
+        }
 
-        ColorBlock col =  change.colors;
-        
-        if(cube.isOn)
-            col.normalColor = Color.red;
-        else
-            col.normalColor = Color.blue;
-        
-        change.colors = col;
-        Debug.Log(cube.isOn);
+        // Debug.Log(towerIndex);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Update(){
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            
+            toggleGroup.SetAllTogglesOff();
+
+
+            if(m_isFollowingObject){
+                m_placement.stopFollowingObject();
+                m_isFollowingObject = false;
+            }
+        }
     }
 }
