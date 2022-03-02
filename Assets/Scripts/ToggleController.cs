@@ -5,43 +5,50 @@ using UnityEngine.UI;
 
 public class ToggleController : MonoBehaviour
 {
-    [SerializeField] private Toggle m_cube;
-    [SerializeField] private Toggle m_sphere;
-    [SerializeField] private Toggle m_slot2;
-    [SerializeField] private Toggle m_slot3;
+    [SerializeField] private ToggleGroup toggleGroup;
+    [SerializeField] private TowerPlacement m_placement;
 
-    private int m_tower = -1;
+    private bool m_isFollowingObject;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_cube.onValueChanged.AddListener(delegate {
-            ToggleValueChanged(m_cube, 0);
-        });
+        m_isFollowingObject = false;
 
-        m_sphere.onValueChanged.AddListener(delegate {
-            ToggleValueChanged(m_sphere, 1);
-        });
-
-        m_slot2.onValueChanged.AddListener(delegate {
-            ToggleValueChanged(m_slot2, 2);
-        });
-
-        m_slot3.onValueChanged.AddListener(delegate {
-            ToggleValueChanged(m_slot3, 3);
-        });
+        for (int i = 0; i < toggleGroup.transform.childCount; i++){
+            int j = i;
+            // Debug.Log(j);
+            Toggle t = toggleGroup.gameObject.transform.GetChild(j).GetComponent<Toggle>();
+            t.onValueChanged.AddListener(delegate {
+                ToggleValueChanged(t, j);
+            });
+        }
     }
 
-    public void ToggleValueChanged(Toggle change, int towerNo){
+    public void ToggleValueChanged(Toggle change, int towerIndex){
         
-        m_tower = towerNo;
-        // Debug.Log(cube.isOn);
-        // Debug.Log(sphere.isOn);
-        // Debug.Log(slot2.isOn);
-        // Debug.Log(slot3.isOn);
+        // coroutine call
+        if(!m_isFollowingObject){
+            m_placement.startFollowingObject(towerIndex);
+            m_isFollowingObject = true;
+        } else {
+            m_placement.stopFollowingObject();
+            m_placement.startFollowingObject(towerIndex);
+        }
+
+        // Debug.Log(towerIndex);
     }
 
-    public int getTowerIndex(){
-        return m_tower;
+    void Update(){
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            
+            toggleGroup.SetAllTogglesOff();
+
+
+            if(m_isFollowingObject){
+                m_placement.stopFollowingObject();
+                m_isFollowingObject = false;
+            }
+        }
     }
 }

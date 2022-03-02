@@ -267,6 +267,8 @@ MonoBehaviour:
   - {fileID: 3719952581069785973, guid: 8af0034e98d7d4a1e87b0a347171f269, type: 3}
   - {fileID: 7966534063803820212, guid: a2e7550ff747111a19b7b88fa73dbe41, type: 3}
   - {fileID: 3719952581069785973, guid: 8af0034e98d7d4a1e87b0a347171f269, type: 3}
+  - {fileID: 7966534063803820212, guid: a2e7550ff747111a19b7b88fa73dbe41, type: 3}
+  - {fileID: 3719952581069785973, guid: 8af0034e98d7d4a1e87b0a347171f269, type: 3}
   m_toggleController: {fileID: 3502849535599320083}
 --- !u!1 &963194225
 GameObject:
@@ -629,6 +631,14 @@ PrefabInstance:
       propertyPath: m_sphere
       value: 
       objectReference: {fileID: 3502849535011686268}
+    - target: {fileID: 195281004171764730, guid: 5ef337f93e8c54680ac4cdfc685efcc9, type: 3}
+      propertyPath: m_placement
+      value: 
+      objectReference: {fileID: 735101440}
+    - target: {fileID: 195281004171764730, guid: 5ef337f93e8c54680ac4cdfc685efcc9, type: 3}
+      propertyPath: toggleGroup
+      value: 
+      objectReference: {fileID: 1365784786}
     - target: {fileID: 195281004171764731, guid: 5ef337f93e8c54680ac4cdfc685efcc9, type: 3}
       propertyPath: m_Name
       value: HUD
