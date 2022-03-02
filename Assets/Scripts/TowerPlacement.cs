@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class TowerPlacement : MonoBehaviour {
     
     [SerializeField] private Camera m_worldCam;
-    [SerializeField] private GameObject[] m_towers;
+    [SerializeField] private WeaponSO[] m_towers;
     [SerializeField] private ToggleController m_toggleController;
 
     private LayerMask m_layerMask;
     private GameObject m_tower;
     private IEnumerator m_isFollowingObject;
-    private GameObject currentTower;
+    private GameObject m_currentTower;
+    private WeaponSO m_towerSO;
 
     void Start(){
         m_layerMask = LayerMask.GetMask("placementplane");
@@ -64,16 +65,18 @@ public class TowerPlacement : MonoBehaviour {
     public void startFollowingObject(int towerIndex){
         
         if(m_isFollowingObject == null){
-            currentTower = m_towers[towerIndex];
-            m_tower = Instantiate(m_towers[towerIndex], new Vector3(0, 0, 0), Quaternion.identity);
-            m_tower.GetComponent<MeshRenderer>().enabled = false;
+            m_currentTower = m_towers[towerIndex].m_prefabObject;
+            m_towerSO = m_towers[towerIndex];
+            m_tower = Instantiate(m_towerSO.m_prefabObject, new Vector3(0, 0, 0), Quaternion.identity);
+            //m_tower.GetComponent<MeshRenderer>().enabled = false;
+            m_tower.GetComponent<CannonAI>().makeMeInvisible(false);
             m_isFollowingObject = followingObject();
             StartCoroutine(m_isFollowingObject);
         }
     }
 
     private IEnumerator followingObject(){
-        float sY = m_tower.transform.localScale.y / 2;
+        float sY = m_towerSO.m_aabb.y / 2;
 
         while(true){
             Vector3 mousePosition = Input.mousePosition;
@@ -81,19 +84,22 @@ public class TowerPlacement : MonoBehaviour {
             RaycastHit h;
             if(Physics.Raycast(r, out h, maxDistance: Mathf.Infinity, layerMask: m_layerMask)){
                 m_tower.transform.position = h.point + new Vector3(0, sY, 0);
-                m_tower.GetComponent<MeshRenderer>().enabled = true;
+                //m_tower.GetComponent<MeshRenderer>().enabled = true;
+                m_tower.GetComponent<CannonAI>().makeMeInvisible(true);
             }else{
-                m_tower.GetComponent<MeshRenderer>().enabled = false;
+                // m_tower.GetComponent<MeshRenderer>().enabled = false;
+                m_tower.GetComponent<CannonAI>().makeMeInvisible(false);
             }
             if(Input.GetMouseButtonDown(0)){
 
                 if(Physics.Raycast(r, out h, maxDistance: Mathf.Infinity, layerMask: m_layerMask)){
-                    if(isObjectOnTopPlane(m_tower, h)){
-                        Instantiate(currentTower, h.point + new Vector3(0, sY, 0), Quaternion.identity);
+                    if(isObjectOnTopPlane(m_towerSO, h)){
+                        Instantiate(m_currentTower, h.point + new Vector3(0, sY, 0), Quaternion.identity);
                     }
                 }
 
-                m_tower.GetComponent<MeshRenderer>().enabled = false;
+                //m_tower.GetComponent<MeshRenderer>().enabled = false;
+                m_tower.GetComponent<CannonAI>().makeMeInvisible(false);
 
                 break;                
             }
@@ -111,8 +117,8 @@ public class TowerPlacement : MonoBehaviour {
         
     }
 
-    public bool isObjectOnTopPlane(GameObject tower, RaycastHit h){
-        Vector3 localMetric = tower.transform.localScale / 2;
+    public bool isObjectOnTopPlane(WeaponSO towerSO, RaycastHit h){
+        Vector3 localMetric = towerSO.m_aabb / 2;
 
         float sX = localMetric.x;
         float sY = localMetric.y;
@@ -125,7 +131,7 @@ public class TowerPlacement : MonoBehaviour {
         Vector3 bottomLeft = new Vector3(-sX, 0f, sZ) + point;
         Vector3 bottomRight = new Vector3(sX, 0f, sZ) + point;
 
-        return hittingSameObjects(tower.transform.up, topLeft, topRight, bottomLeft, bottomRight);
+        return hittingSameObjects(towerSO.m_prefabObject.transform.up, topLeft, topRight, bottomLeft, bottomRight);
     }
 
     public bool hittingSameObjects(Vector3 up, Vector3 topLeft, Vector3 topRight, Vector3 bottomLeft, Vector3 bottomRight){
