@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
@@ -51,7 +52,17 @@ public class CurveRenderer : MonoBehaviour {
         cso.fitCubicSpline(noise, start, end, Vector3.up);
         Vector3[] sampledPoints = cso.samplePoints(spacing, resolution, start, end); 
         
-        createPath(this.gameObject, sampledPoints);
+        // createPath(this.gameObject, sampledPoints);
+        Func<Vector3, float, Vector3> f = (dir, width) => {
+            return dir * (thickness / 2.0f); 
+        };
+
+        Func<Vector3, float, Vector3> fneg = (dir, width) => {
+            return - dir * (thickness / 2.0f); 
+        };
+
+
+        GetComponent<ExtrudeCurve>().extrudeMid(sampledPoints, Vector3.up, f, fneg);
 
         var verts = createSideVerts(sampledPoints, thickness);
 
@@ -61,17 +72,52 @@ public class CurveRenderer : MonoBehaviour {
             //g.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
 
-        createWall(leftWall, verts.leftVerts, true);
-        createWall(rightWall, verts.rightVerts, false);
+        // createWall(leftWall, verts.leftVerts, true);
+        //createWall(rightWall, verts.rightVerts, false);
+        
+
+        Func<Vector3, float, Vector3> fl = (dir, width) => {
+            return Vector3.up * wallHeight + dir * (wallHeight / Mathf.Tan(Mathf.PI/2.0f - wallInclination));
+        };
+
+        Func<Vector3, float, Vector3> fr = (dir, width) => {
+            return Vector3.up * wallHeight - dir * (wallHeight / Mathf.Tan(Mathf.PI/2.0f - wallInclination));
+        };
+
+
+        leftWall.GetComponent<ExtrudeCurve>()
+            .extrudeSide(verts.leftVerts, Vector3.up, true, (d, w) => Vector3.zero, fl);
+        rightWall.GetComponent<ExtrudeCurve>()
+            .extrudeSide(verts.rightVerts, Vector3.up, false, (d, w) => Vector3.zero, fr);
 
         //createTopPlane(leftPlane, verts.leftVerts, true);
         //createTopPlane(rightPlane, verts.rightVerts, false);
+        
+        Func<Vector3, float, Vector3> ftl = (dir, width) => {
+            return Vector3.up * wallHeight + 
+                dir * (wallHeight / Mathf.Tan(Mathf.PI/2.0f - wallInclination))
+                + Vector3.left * planeThickness; 
+        };
+
+        Func<Vector3, float, Vector3> ftr = (dir, width) => {
+            return Vector3.up * wallHeight - 
+                dir * (wallHeight / Mathf.Tan(Mathf.PI/2.0f - wallInclination))
+                + -1.0f * Vector3.left * planeThickness;
+        };
+
+       
+        leftPlane.GetComponent<ExtrudeCurve>()
+            .extrudeSide(verts.leftVerts, Vector3.up, true, fl, ftl);
+        
+       rightPlane.GetComponent<ExtrudeCurve>()
+            .extrudeSide(verts.rightVerts, Vector3.up, false, fr, ftr);
+
 
     }
 
     private void createPath(GameObject obj, Vector3[] points){    
         var verts = createSideVerts(points, thickness);
-        var meshdata = genMeshBtwTwoCurves(verts.leftVerts, verts.rightVerts);
+        var meshdata = CreateMesh.genMeshBtwTwoCurves(verts.leftVerts, verts.rightVerts);
 
         Mesh mesh = new Mesh();
         obj.GetComponent<MeshFilter>().mesh = mesh;
@@ -94,7 +140,7 @@ public class CurveRenderer : MonoBehaviour {
             vert2 = temp;
         }
 
-        var meshdata = genMeshBtwTwoCurves(points, vert2);
+        var meshdata = CreateMesh.genMeshBtwTwoCurves(points, vert2);
 
         Mesh mesh = new Mesh();
         obj.GetComponent<MeshFilter>().mesh = mesh;
@@ -139,7 +185,7 @@ public class CurveRenderer : MonoBehaviour {
             verts2 = temp;
         }
 
-        var meshData = genMeshBtwTwoCurves(verts, verts2);
+        var meshData = CreateMesh.genMeshBtwTwoCurves(verts, verts2);
         Mesh mesh = new Mesh();
         obj.GetComponent<MeshFilter>().mesh = mesh;
         
@@ -150,106 +196,7 @@ public class CurveRenderer : MonoBehaviour {
         mesh.RecalculateNormals();
     }
 
-    private static (Vector3[] meshverts, int[] triangles, Vector2[] uvs)
-    genMeshTwoSidedBtwTwoCurves(Vector3[] curveOneVerts, Vector3[] curveTwoVerts){
-    
-        if(curveOneVerts.Length != curveTwoVerts.Length){
-            return (null, null, null);
-        }
 
-        int n = curveOneVerts.Length;
-
-        Vector3[] meshverts = new Vector3[2 * n];
-        int[] triangles = new int[3 * 2 * (n - 1) * 2];
-        Vector2[] uvs = new Vector2[2 * n];
-
-
-        int meshVertexIndex = 0;
-        int triangleIndex = 0;
-        for (int i = 0; i < n; i++){
-            // create and add points 
-            meshverts[meshVertexIndex] = curveOneVerts[i];
-            meshverts[meshVertexIndex + 1] = curveTwoVerts[i];
-            
-            // uv calculation
-            float completionPercent = i/(n - 1.0f);
-            uvs[meshVertexIndex] = new Vector2(0.0f, completionPercent);
-            uvs[meshVertexIndex + 1] = new Vector2(1.0f, completionPercent);
-
-            // create triangles 
-            if(i < n - 1){
-                triangles[triangleIndex] = meshVertexIndex;
-                triangles[triangleIndex + 1] = meshVertexIndex + 2;
-                triangles[triangleIndex + 2] = meshVertexIndex + 1;
-
-                triangles[triangleIndex + 3] = meshVertexIndex + 1;
-                triangles[triangleIndex + 4] = meshVertexIndex + 2;
-                triangles[triangleIndex + 5] = meshVertexIndex + 3;
-
-                triangles[triangleIndex + 6] = meshVertexIndex;
-                triangles[triangleIndex + 7] = meshVertexIndex + 1;
-                triangles[triangleIndex + 8] = meshVertexIndex + 2;
-
-                triangles[triangleIndex + 9] = meshVertexIndex + 1;
-                triangles[triangleIndex + 10] = meshVertexIndex + 3;
-                triangles[triangleIndex + 11] = meshVertexIndex + 2;
-
-
-                triangleIndex += 12;
-            }
-
-
-            meshVertexIndex += 2; 
-        }
-
-        return (meshverts, triangles, uvs);
-    } 
-
-    private static (Vector3[] meshverts, int[] triangles, Vector2[] uvs)
-    genMeshBtwTwoCurves(Vector3[] curveOneVerts, Vector3[] curveTwoVerts){
-    
-        if(curveOneVerts.Length != curveTwoVerts.Length){
-            return (null, null, null);
-        }
-
-        int n = curveOneVerts.Length;
-
-        Vector3[] meshverts = new Vector3[2 * n];
-        int[] triangles = new int[3 * 2 * (n - 1)];
-        Vector2[] uvs = new Vector2[2 * n];
-
-
-        int meshVertexIndex = 0;
-        int triangleIndex = 0;
-        for (int i = 0; i < n; i++){
-            // create and add points 
-            meshverts[meshVertexIndex] = curveOneVerts[i];
-            meshverts[meshVertexIndex + 1] = curveTwoVerts[i];
-            
-            // uv calculation
-            float completionPercent = i/(n - 1.0f);
-            uvs[meshVertexIndex] = new Vector2(0.0f, completionPercent);
-            uvs[meshVertexIndex + 1] = new Vector2(1.0f, completionPercent);
-
-            // create triangles 
-            if(i < n - 1){
-                triangles[triangleIndex] = meshVertexIndex;
-                triangles[triangleIndex + 1] = meshVertexIndex + 2;
-                triangles[triangleIndex + 2] = meshVertexIndex + 1;
-
-                triangles[triangleIndex + 3] = meshVertexIndex + 1;
-                triangles[triangleIndex + 4] = meshVertexIndex + 2;
-                triangles[triangleIndex + 5] = meshVertexIndex + 3;
-
-                triangleIndex += 6;
-            }
-
-
-            meshVertexIndex += 2; 
-        }
-
-        return (meshverts, triangles, uvs);
-    } 
 
 
     private static (Vector3[] leftVerts, Vector3[] rightVerts) 
