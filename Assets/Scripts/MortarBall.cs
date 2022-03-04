@@ -11,7 +11,6 @@ public class MortarBall : MonoBehaviour
 
     [SerializeField] private MortarBallSO m_mortarBallStats;
     [SerializeField] private MortarBallRange m_mortarBallRange;
-    //[SerializeField] private GameObject m_mortarBallPath;
     [SerializeField] private GameObject pathStart;
     [SerializeField] private GameObject pathTop;
     [SerializeField] private GameObject pathEnd;
@@ -23,67 +22,50 @@ public class MortarBall : MonoBehaviour
     private float distanceEnemy;
     private Vector3 directionEnemy;
 
-
-    
-
-
-    //private Transform pathTop;
-    //private Transform pathEnd;
-
     void Start(){
         m_mortarBallRange.GetComponent<SphereCollider>().radius = m_mortarBallStats.m_damageRadius;
 
         // initializing the positions of the path
-        
-        // putting the starting point of the path
-        //m_mortarBallPath.transform.GetChild(1).position = transform.position;
-
         pathStart.transform.position = transform.position;
-        
-        // putting the height of the path
-        //pathTop = m_mortarBallPath.transform.GetChild(1);
-
-        // putting the position of the end of the path
-        //pathEnd = m_mortarBallPath.transform.GetChild(2);
     }
     
     private IEnumerator mortarBallMovement(){
         
-        //m_mortarBallPath.transform.GetChild(1).position = new Vector3(Mathf.Abs(transform.position.x - m_fixedLastEnemyPosition.x)/2, Vector3.Distance(transform.position, m_fixedLastEnemyPosition)/2, Mathf.Abs(transform.position.z - m_fixedLastEnemyPosition.z)/2);
-        
+        // calculation for the height of parabola
         distanceEnemy = Vector3.Distance(m_fixedLastEnemyPosition, transform.position);
         directionEnemy = (m_fixedLastEnemyPosition - transform.position).normalized;
-        //m_mortarBallPath.transform.GetChild(0).position = (transform.position + (directionEnemy * distanceEnemy / 2f)) + Vector3.up * distanceEnemy / 2f;
-        //m_mortarBallPath.transform.GetChild(2).position = m_fixedLastEnemyPosition;
 
+        // setting height of the parabola
         pathTop.transform.position = (transform.position + (directionEnemy * distanceEnemy / 2f)) + Vector3.up * distanceEnemy / 2f;
         pathEnd.transform.position = m_fixedLastEnemyPosition;
-
-        //this.GetComponent<ParabolaController>().initializeParabolaFly();
-        //this.GetComponent<ParabolaController>().FollowParabola();
         
+        //Debug.Log("enemy " + m_fixedLastEnemyPosition);
 
-
-        while(transform.position != m_fixedLastEnemyPosition) {
-            //transform.position = this.parabolaCurve(transform.position, m_fixedLastEnemyPosition, Vector3.Distance(transform.position, m_fixedLastEnemyPosition)/4, t);
-            //t += (Time.deltaTime * m_mortarBallStats.m_speed);
-
-            //this.GetComponent<ParabolaController>().updateParabola();
+        
+        while(Vector3.Distance(m_fixedLastEnemyPosition, transform.position) > 1) {
 
             GetComponent<ParabolaController>().enabled = true;
 
-            yield return new WaitForSeconds(2f);
+            //Debug.Log("object" + transform.position);
+
+            yield return null;
         }
+
+        //Debug.Log("object" + transform.position);
+
+        GetComponent<ParabolaController>().enabled = false;
+
+        //Debug.Log("parabola controller disabled");
 
         m_potTargets = m_mortarBallRange.getPotTargets();
 
         foreach (GameObject gb in m_potTargets){
             if(m_mortarBallRange.isTargetInRange(gb))
                 gb.GetComponent<EnemyAI>().reduceHealth(m_mortarDamage);
-                Debug.Log("Damage done!");
+                //Debug.Log("Damage done!");
         }
 
-        Destroy(this.gameObject, 0.2f);
+        Destroy(this.gameObject);
     }
 
     
@@ -105,15 +87,4 @@ public class MortarBall : MonoBehaviour
 
         StartCoroutine(mortarBallMovement());
     }
-    
-
-    private Vector3 parabolaCurve(Vector3 start, Vector3 end, float height, float t) {
-        Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
-
-        var mid = Vector3.Lerp(start, end, t);
-
-        return new Vector3(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t), mid.z);
-    }
-    
-
 }

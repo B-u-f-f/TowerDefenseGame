@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MortarSO
   m_EditorClassIdentifier: 
   <m_rangeRadius>k__BackingField: 20
-  <m_fireDelay>k__BackingField: 2000
+  <m_fireDelay>k__BackingField: 5000
   <m_damage>k__BackingField: 20
   <m_angVelocity>k__BackingField: 5
