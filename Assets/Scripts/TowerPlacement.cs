@@ -61,7 +61,7 @@ public class TowerPlacement : MonoBehaviour {
                     canPlace = true;
                     
                     // checking if the object is hitting another object or not
-                    Debug.Log(m_tower);
+                    // Debug.Log(m_tower);
                     if(m_tower.GetComponent<CannonPlacement>().isThereNearbyCannons()){
                         m_tower.GetComponent<CannonPlacement>().changeMaterial(incorrectMaterial);
                         canPlace = false;
