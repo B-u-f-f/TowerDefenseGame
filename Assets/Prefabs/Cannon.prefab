@@ -301,7 +301,7 @@ MonoBehaviour:
   m_cannonNozzle: {fileID: 4485654286293379574}
   m_cannonRange: {fileID: 5491174858749358119}
   cannonStats: {fileID: 11400000, guid: a32c4552527f5a2a9888a41677102096, type: 2}
-  cannonBall: {fileID: 0}
+  cannonBall: {fileID: 585979358299908120, guid: d36f0ff560cfc5740b657c2e324eff00, type: 3}
 --- !u!1 &8574254129254453096
 GameObject:
   m_ObjectHideFlags: 0

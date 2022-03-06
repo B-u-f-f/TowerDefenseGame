@@ -6,6 +6,7 @@ TagManager:
   tags:
   - placementplatform
   - Weapon
+  - Enemy
   layers:
   - Default
   - TransparentFX
