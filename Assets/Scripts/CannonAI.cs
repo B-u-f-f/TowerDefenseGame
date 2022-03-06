@@ -18,15 +18,6 @@ public class CannonAI : MonoBehaviour {
         m_cannonRange.GetComponent<SphereCollider>().radius = cannonStats.m_rangeRadius;
         m_fireCo = null;
     }
-
-    public void makeMeInvisible(bool b){
-        
-        MeshRenderer[] mRen = GetComponentsInChildren<MeshRenderer>();
-
-        foreach (MeshRenderer m in mRen){
-            m.enabled = b;
-        }
-    }
     
     private IEnumerator cannonFire(){
         EnemyAI eai = m_target.GetComponent<EnemyAI>();
