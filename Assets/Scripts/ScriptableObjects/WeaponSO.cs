@@ -6,4 +6,5 @@ using UnityEngine;
 public class WeaponSO : ScriptableObject {
     [field: SerializeField] public Vector3 m_aabb {get; set;}
     [field: SerializeField] public GameObject m_prefabObject {get; set;}
+    [field: SerializeField] public GameObject m_fakePrefabObject {get; set;}
 }

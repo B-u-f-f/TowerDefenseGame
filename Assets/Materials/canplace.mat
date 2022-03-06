@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: tower
+  m_Name: canplace
   m_Shader: {fileID: 4800000, guid: 7fcaf3ff52d3f326c809b4f516c1e175, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -55,6 +55,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -74,7 +75,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Alpha: {r: 1, g: 1, b: 1, a: 0.5254902}
-    - _Color: {r: 0.94509804, g: 0.11204728, b: 0.011764705, a: 0.4392157}
+    - _Color: {r: 0.11471649, g: 0.6698113, b: 0.11058204, a: 0.4392157}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 0.745283, g: 0.3005768, b: 0.2917853, a: 0.6666667}
   m_BuildTextureStacks: []
