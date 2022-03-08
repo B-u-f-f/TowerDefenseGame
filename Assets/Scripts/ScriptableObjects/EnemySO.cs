@@ -2,16 +2,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName ="EnemySO", menuName ="ScriptableObjects/Enemy")]
 public class EnemySO : ScriptableObject  {
-    [SerializeField] private int m_health = 100;
-    
-    public int Health {
-        get {
-            return m_health;
-        }
-
-        set {
-            m_health = value;
-        }
-    }
+    [field: SerializeField] public float height {get; set;} = 1.0f;
+    [field: SerializeField] public GameObject prefab {get; set;}
+    [field: SerializeField] public float speed {get; set;} = 3.0f; 
 
 }
