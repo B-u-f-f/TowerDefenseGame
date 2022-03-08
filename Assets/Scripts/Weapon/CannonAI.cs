@@ -33,7 +33,7 @@ public class CannonAI : MonoBehaviour {
             // wait for delay
             yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f);
 
-            Debug.Log("before reduce health");
+            //Debug.Log("before reduce health");
             // take away the health of m_target
             
             eai.reduceHealth(cannonStats.m_damage);
