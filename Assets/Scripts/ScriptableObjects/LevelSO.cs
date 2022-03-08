@@ -4,5 +4,21 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelSO", menuName = "ScriptableObjects/Level")]
 public class LevelSO : ScriptableObject {
-    [field: SerializeField] public int m_initialCoins = 500;
+    [SerializeField] private int m_coins = 500;
+
+    public int Coins {
+        get {
+            return m_coins;
+        } 
+    }
+
+    public void changeCoins(int amt){
+        if( (m_coins + amt) < 0){ 
+            m_coins = 0; 
+            return; 
+        }
+
+
+        m_coins += amt;    
+    }
 }

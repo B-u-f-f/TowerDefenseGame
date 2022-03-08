@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,6 +8,8 @@ public class Manager : MonoBehaviour {
     [SerializeField] private WaveData[] waves;
     [SerializeField] private Button m_changeWave;
     [SerializeField] private GameObject m_inventory;
+
+    [SerializeField] private LevelSO m_lvlSO;
     
 
     private IEnumerator m_curWave; 
@@ -49,9 +50,7 @@ public class Manager : MonoBehaviour {
 
         }
     }
-    
-    void Update(){
-    }
+
 
     IEnumerator cwaves () {
         yield return m_wm.startNextWave();
@@ -59,4 +58,8 @@ public class Manager : MonoBehaviour {
         TaskOnClick();
     }
 
+    public void changeCurrency(int amt){
+        m_lvlSO.changeCoins(amt);
+    } 
+    
 }

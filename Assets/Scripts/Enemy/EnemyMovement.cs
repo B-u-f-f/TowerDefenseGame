@@ -29,8 +29,13 @@ public class EnemyMovement : MonoBehaviour {
             yield return move(enemyData.speed, new Vector3(pos.x, transform.position.y, pos.z));
         }
 
+        Destroy(this.gameObject, 0.2f);
+    }
 
-        Destroy(this, 0.2f);
+    void OnDestroy(){
+        Instantiate(enemyData.currencyPrefab, transform.position, Quaternion.identity);
+
+        FindObjectOfType<Manager>().changeCurrency(enemyData.currencyAward);
     }
 
 
