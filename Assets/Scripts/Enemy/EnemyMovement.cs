@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour {
         }
 
 
-        Destroy(this.gameObject, 0.2f);
+        Destroy(this, 0.2f);
     }
 
 
