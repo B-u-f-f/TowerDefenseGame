@@ -23,11 +23,12 @@ public class EnemySpawn : MonoBehaviour
     }   */ 
 
 
-    public void spawnEnemy(EnemyMovement enemy){
+    public EnemyMovement spawnEnemy(EnemyMovement enemy){
         Vector3 spawnPosition = m_spawnPoint.position;
         spawnPosition.y += 1;
         EnemyMovement obj = Instantiate(enemy, spawnPosition, Quaternion.identity);
         obj.Path = m_spawnPoint.GetComponent<BezierPath>();
-        obj.startFollow(); 
+        obj.startFollow();
+        return obj;
     }
 }

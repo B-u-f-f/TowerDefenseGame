@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour {
     
     //public delegate void onDeathDelegate(GameObject go);
     //public event onDeathDelegate deathEvent; 
-    public Action<GameObject> deathEvent; 
+    public Action<GameObject> deathEvent;
     void OnDestroy(){
         if(deathEvent != null){
             deathEvent(this.gameObject);

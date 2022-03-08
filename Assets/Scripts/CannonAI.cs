@@ -23,7 +23,7 @@ public class CannonAI : MonoBehaviour {
         EnemyAI eai = m_target.GetComponent<EnemyAI>();
 
         while(eai.Health > 0){
-            Debug.Log("Fire! Fire! Fire! " + m_target.name);
+            //Debug.Log("Fire! Fire! Fire! " + m_target.name);
 
             // start coroutine for cannonball
             GameObject cBall = Instantiate(cannonBall, transform.position, Quaternion.identity);
@@ -33,7 +33,10 @@ public class CannonAI : MonoBehaviour {
             // wait for delay
             yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f);
 
+            Debug.Log("before reduce health");
             // take away the health of m_target
+
+            
             eai.reduceHealth(cannonStats.m_damage);
         }
     }
