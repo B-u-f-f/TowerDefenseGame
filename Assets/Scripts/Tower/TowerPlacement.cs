@@ -7,9 +7,10 @@ public class TowerPlacement : MonoBehaviour {
     
     [SerializeField] private Camera m_worldCam;
     [SerializeField] private WeaponSO[] m_towers;
-    [SerializeField] private ToggleController m_toggleController;
+    //[SerializeField] private ToggleController m_toggleController;
     [SerializeField] private Material correctMaterial;
     [SerializeField] private Material incorrectMaterial;
+    [SerializeField] private CoinManager coinManager;
 
     private LayerMask m_layerMaskPlane;
     private LayerMask m_layerMaskCannon;
@@ -85,6 +86,7 @@ public class TowerPlacement : MonoBehaviour {
             if(Input.GetMouseButtonDown(0)){
 
                 if(canPlace){
+                    coinManager.decereaseAmount(m_towerSO.m_costPrice);
                     Instantiate(m_currentTower, h.point + new Vector3(0, sY, 0), Quaternion.identity);
                 }
 

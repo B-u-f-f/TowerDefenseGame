@@ -10,6 +10,8 @@ public class ToggleController : MonoBehaviour
 
     private bool m_isFollowingObject;
 
+    private bool m_isThereMoney = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,15 +27,22 @@ public class ToggleController : MonoBehaviour
         }
     }
 
+    public void setIsThereMoney(bool b){
+        m_isThereMoney = b;
+    }
+
     public void ToggleValueChanged(Toggle change, int towerIndex){
         
-        // coroutine call
-        if(!m_isFollowingObject){
-            m_placement.startFollowingObject(towerIndex);
-            m_isFollowingObject = true;
-        } else {
-            m_placement.stopFollowingObject();
-            m_placement.startFollowingObject(towerIndex);
+        if(m_isThereMoney){
+            
+            // coroutine call
+            if(!m_isFollowingObject){
+                m_placement.startFollowingObject(towerIndex);
+                m_isFollowingObject = true;
+            } else {
+                m_placement.stopFollowingObject();
+                m_placement.startFollowingObject(towerIndex);
+            }
         }
 
         // Debug.Log(towerIndex);
