@@ -34,7 +34,13 @@ public class CannonAI : MonoBehaviour {
             yield return new WaitForSeconds(cannonStats.m_fireDelay / 1000f);
 
             // take away the health of m_target
-            eai.reduceHealth(cannonStats.m_damage);
+            try {
+                eai.reduceHealth(cannonStats.m_damage);
+            } catch (UnityException ue){
+                Debug.Log(ue.Message);
+                m_target = null;
+                break;
+            } 
         }
     }
 

@@ -17,14 +17,14 @@ public class WaveData {
         }
     }
     
-    [SerializeField] private EnemyMovement m_enemy;
-    public EnemyMovement Enemy {
+    [SerializeField] private EnemySO m_enemy;
+    public EnemySO Enemy {
         get {
             return m_enemy;
         }
     } 
 
-    public WaveData(uint numEnemies, float waitTime, EnemyMovement enemy){
+    public WaveData(uint numEnemies, float waitTime, EnemySO enemy){
         m_numEnemies = numEnemies; 
         m_waitTime = waitTime;
         m_enemy = enemy;
