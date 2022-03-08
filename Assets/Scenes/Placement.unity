@@ -2507,10 +2507,10 @@ MonoBehaviour:
   waves:
   - m_numEnemies: 5
     m_waitTime: 5
-    m_enemy: {fileID: -7593412574816819690, guid: 103509e845206a8fbb959aa4ddfe4588, type: 3}
+    m_enemy: {fileID: 2145289448451773640, guid: 1a7e12e03cb6a1a2f954e944005ac4e5, type: 3}
   - m_numEnemies: 5
     m_waitTime: 5
-    m_enemy: {fileID: -7593412574816819690, guid: 8baf888c37817dcf6b7fae421b25bb08, type: 3}
+    m_enemy: {fileID: 2145289448451773640, guid: 1a7e12e03cb6a1a2f954e944005ac4e5, type: 3}
 --- !u!114 &1992636650
 MonoBehaviour:
   m_ObjectHideFlags: 0

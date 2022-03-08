@@ -4,13 +4,23 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour {
     [SerializeField] private float m_speed = 0.5f;
     private float errorCorrection = 0f;
-    
+
+    [Range(0,1f)]
+    public float StartAnimTime = 0.3f;
+    [Range(0, 1f)]
+    public float StopAnimTime = 0.15f;
+
+    public Animator anim;
     private BezierPath path;
     public BezierPath Path {
         set {
             path = value;
         }
     }
+
+    void Start () {
+		// anim = this.GetComponent<Animator>();
+	}
 
     void OnTriggerEnter(Collider collider){
         if(collider.gameObject.name == "Plane"){
@@ -33,6 +43,9 @@ public class EnemyMovement : MonoBehaviour {
     private IEnumerator move(float speed, Vector3 dest){        
         dest.y += errorCorrection;
         while(transform.position != dest){
+            if(anim!=null){
+                anim.SetFloat ("Blend", m_speed, StartAnimTime, Time.deltaTime);  
+            }
             transform.position = Vector3.MoveTowards(transform.position, dest, speed * Time.deltaTime);
             yield return null;
         }
