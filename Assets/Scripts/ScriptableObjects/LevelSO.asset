@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f832675a7e6bd2c0daa6c968f4489711, type: 3}
   m_Name: LevelSO
   m_EditorClassIdentifier: 
-  m_initialCoins: 500
+  m_coins: 0
