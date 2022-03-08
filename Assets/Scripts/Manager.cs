@@ -8,7 +8,8 @@ public class Manager : MonoBehaviour {
     [SerializeField] private WaveData[] waves;
     [SerializeField] private Button m_changeWave;
     [SerializeField] private GameObject m_inventory;
-
+    [SerializeField] private ToggleController m_toggleController;
+    [SerializeField] private TextMeshProUGUI m_TMPCoinAmount;
     [SerializeField] private LevelSO m_lvlSO;
     
 
@@ -21,6 +22,8 @@ public class Manager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         m_wm = GetComponent<WaveManager>();
+
+        m_TMPCoinAmount.text = m_lvlSO.Coins + " coins";
 
         m_wm.Waves = waves;
 
@@ -60,6 +63,14 @@ public class Manager : MonoBehaviour {
 
     public void changeCurrency(int amt){
         m_lvlSO.changeCoins(amt);
+        m_TMPCoinAmount.text = m_lvlSO.Coins + " coins";
+
+        if(m_lvlSO.Coins <= 0){
+            m_toggleController.setIsThereMoney(false);
+            
+        }else{
+            m_toggleController.setIsThereMoney(true);
+        }
     } 
     
 }
