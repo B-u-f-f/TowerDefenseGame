@@ -3,8 +3,18 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
+
+    [Range(0,1f)]
+    public float StartAnimTime = 0.3f;
+    [Range(0, 1f)]
+    public float StopAnimTime = 0.15f;
+
+    public Animator anim;
+
+
     [SerializeField] private EnemySO enemyData;
     
+
     private BezierPath path;
     public BezierPath Path {
         set {
@@ -36,7 +46,10 @@ public class EnemyMovement : MonoBehaviour {
 
     private IEnumerator move(float speed, Vector3 dest){        
         while(transform.position != dest){
-            transform.position = Vector3.MoveTowards(transform.position, dest, speed * Time.deltaTime);
+            if(anim!=null){
+                anim.SetFloat ("Blend", m_speed, StartAnimTime, Time.deltaTime);  
+            }
+            transform.position = Vector3.MoveTowards(transform.position, dest, enemyData.speed * Time.deltaTime);
             yield return null;
         }
     }
