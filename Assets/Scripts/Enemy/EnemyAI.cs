@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour {
         m_health -= (int)amt;
 
         if(m_health <= 0){
+            GetComponent<EnemyMovement>().setDeathState(1);
             Destroy(this.gameObject, 0.2f);
         }
     }

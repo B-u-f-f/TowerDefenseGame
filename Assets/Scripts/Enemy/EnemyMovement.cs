@@ -4,6 +4,9 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour {
 
     [SerializeField] private EnemySO enemyData;
+    // if deathState is 1 then it means the coins will be dropped
+    // if the deathState is 0 then the coins will not be dropped
+    private int deathState = 1;
     
     private BezierPath path;
     public BezierPath Path {
@@ -28,14 +31,25 @@ public class EnemyMovement : MonoBehaviour {
         foreach (Vector3 pos in path.Positions){
             yield return move(enemyData.speed, new Vector3(pos.x, transform.position.y, pos.z));
         }
-
+        
+        setDeathState(0);
         Destroy(this.gameObject, 0.2f);
     }
 
-    void OnDestroy(){
-        Instantiate(enemyData.currencyPrefab, transform.position, Quaternion.identity);
+    public void setDeathState(int value){
+        deathState = value;
+    }
 
-        FindObjectOfType<Manager>().changeCurrency(enemyData.currencyAward);
+    public int getDeathState(){
+        return deathState;
+    }
+
+    void OnDestroy(){
+
+        if(deathState == 1){
+            Instantiate(enemyData.currencyPrefab, transform.position, Quaternion.identity);
+            FindObjectOfType<Manager>().changeCurrency(enemyData.currencyAward);
+        }        
     }
 
 
