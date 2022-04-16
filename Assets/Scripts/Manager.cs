@@ -23,6 +23,8 @@ public class Manager : MonoBehaviour {
     void Start() {
         m_wm = GetComponent<WaveManager>();
 
+        m_lvlSO.Coins = 1000;
+
         m_TMPCoinAmount.text = m_lvlSO.Coins + " coins";
 
         m_wm.Waves = waves;

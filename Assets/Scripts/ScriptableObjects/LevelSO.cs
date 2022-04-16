@@ -10,6 +10,9 @@ public class LevelSO : ScriptableObject {
         get {
             return m_coins;
         } 
+        set {
+            m_coins = value;
+        }
     }
 
     public void changeCoins(int amt){
