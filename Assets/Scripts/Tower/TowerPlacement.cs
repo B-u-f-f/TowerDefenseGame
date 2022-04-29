@@ -7,7 +7,7 @@ public class TowerPlacement : MonoBehaviour {
     
     [SerializeField] private Camera m_worldCam;
     [SerializeField] private WeaponSO[] m_towers;
-    //[SerializeField] private ToggleController m_toggleController;
+    [SerializeField] private ToggleController m_toggleController;
     [SerializeField] private Material correctMaterial;
     [SerializeField] private Material incorrectMaterial;
 

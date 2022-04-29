@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5216767260485448090}
   - component: {fileID: 5216767260485448091}
-  - component: {fileID: 2016601908393954627}
+  - component: {fileID: 4251079442371555593}
   m_Layer: 0
   m_Name: Range
   m_TagString: Untagged
@@ -139,7 +139,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2016601908393954627
+--- !u!114 &4251079442371555593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5216767260485448089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85868cc99fefd6a2aa8cc3c0fda9c7af, type: 3}
+  m_Script: {fileID: 11500000, guid: 4eef3d27fd493ff94834901db178aef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8828702086076568441
@@ -163,8 +163,8 @@ GameObject:
   - component: {fileID: 8828702086076568444}
   - component: {fileID: 8828702086076568447}
   - component: {fileID: 8828702086076568446}
-  - component: {fileID: 489066373004410972}
-  - component: {fileID: 4140916692448776713}
+  - component: {fileID: 8819995813571173263}
+  - component: {fileID: 1546586039165822710}
   m_Layer: 0
   m_Name: Mortarball
   m_TagString: Untagged
@@ -252,7 +252,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &489066373004410972
+--- !u!114 &8819995813571173263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,13 +261,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8828702086076568441}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4a9dacfa8453fc26a1c229b09c60349, type: 3}
+  m_Script: {fileID: 11500000, guid: 75ec868f07c6fb3948b28702d4db114a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ParabolaRoot: {fileID: 8895615216081141923}
   Autostart: 1
   Animation: 1
---- !u!114 &4140916692448776713
+--- !u!114 &1546586039165822710
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -276,11 +276,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8828702086076568441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0370abaea6e6218a9493dab7dd58543, type: 3}
+  m_Script: {fileID: 11500000, guid: 56cfdf268c9e382f598d478edbb204ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_mortarBallStats: {fileID: 11400000, guid: c64f718ebb848586a940d20df0be47df, type: 2}
-  m_mortarBallRange: {fileID: 2016601908393954627}
+  m_mortarBallRange: {fileID: 4251079442371555593}
   pathStart: {fileID: 928367216288635956}
   pathTop: {fileID: 928367216738509586}
   pathEnd: {fileID: 928367217984645598}

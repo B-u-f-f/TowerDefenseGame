@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemySO 1
   m_EditorClassIdentifier: 
   <height>k__BackingField: 1
-  <prefab>k__BackingField: {fileID: 5232134518588667875, guid: 103509e845206a8fbb959aa4ddfe4588, type: 3}
-  <speed>k__BackingField: 3
+  <prefab>k__BackingField: {fileID: 102024334796969825, guid: 0bdd7bb71e8ddde32a5cf1e8527a0ae6, type: 3}
+  <speed>k__BackingField: 2
   <currencyPrefab>k__BackingField: {fileID: 1947823177085009740, guid: 41f1400cc608a64fb822af55ba28926d, type: 3}
   <currencyAward>k__BackingField: 100
