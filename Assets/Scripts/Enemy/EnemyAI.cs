@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour {
 
-    private int m_health = 100;
+    [SerializeField] private int health;
 
+    private int m_health;
+
+    void Start(){
+        m_health = health;
+    }
 
     public int Health{
         get {

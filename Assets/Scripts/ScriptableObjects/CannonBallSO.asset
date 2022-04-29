@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30cbde2a34fb8c1d59e269a7d4b696ee, type: 3}
   m_Name: CannonBallSO
   m_EditorClassIdentifier: 
-  <m_speed>k__BackingField: 1
+  <m_speed>k__BackingField: 0.5
+  <m_radius>k__BackingField: 1
